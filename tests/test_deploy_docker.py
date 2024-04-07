@@ -19,19 +19,27 @@ def docker_service_up(docker_compose_file):
 
     try:
         subprocess.check_output(["docker-compose", "-f", docker_compose_file, "stop"])
-        subprocess.check_output(["docker-compose", "-f", docker_compose_file, "rm", "-f"])
+        subprocess.check_output(
+            ["docker-compose", "-f", docker_compose_file, "rm", "-f"]
+        )
     except subprocess.CalledProcessError:
         pass
 
-    build_process = subprocess.Popen([file_relative_path(docker_compose_file, "./build.sh")])
+    build_process = subprocess.Popen(
+        [file_relative_path(docker_compose_file, "./build.sh")]
+    )
     build_process.wait()
     assert build_process.returncode == 0
 
-    up_process = subprocess.Popen(["docker-compose", "-f", docker_compose_file, "up", "--no-start"])
+    up_process = subprocess.Popen(
+        ["docker-compose", "-f", docker_compose_file, "up", "--no-start"]
+    )
     up_process.wait()
     assert up_process.returncode == 0
 
-    start_process = subprocess.Popen(["docker-compose", "-f", docker_compose_file, "start"])
+    start_process = subprocess.Popen(
+        ["docker-compose", "-f", docker_compose_file, "start"]
+    )
     start_process.wait()
     assert start_process.returncode == 0
 
@@ -39,7 +47,9 @@ def docker_service_up(docker_compose_file):
         yield
     finally:
         subprocess.check_output(["docker-compose", "-f", docker_compose_file, "stop"])
-        subprocess.check_output(["docker-compose", "-f", docker_compose_file, "rm", "-f"])
+        subprocess.check_output(
+            ["docker-compose", "-f", docker_compose_file, "rm", "-f"]
+        )
 
 
 PIPELINES_OR_ERROR_QUERY = """
@@ -121,7 +131,9 @@ mutation($runId: String!) {
 
 
 def test_deploy_docker():
-    with docker_service_up(file_relative_path(__file__, "../from_source/docker-compose.yml")):
+    with docker_service_up(
+        file_relative_path(__file__, "../from_source/docker-compose.yml")
+    ):
         # Wait for server to wake up
 
         start_time = time.time()
@@ -172,7 +184,10 @@ def test_deploy_docker():
             f"http://{webserver_host}:3000/graphql?query={LAUNCH_PIPELINE_MUTATION}&variables={json.dumps(variables)}"
         ).json()
 
-        assert launch_res["data"]["launchPipelineExecution"]["__typename"] == "LaunchRunSuccess"
+        assert (
+            launch_res["data"]["launchPipelineExecution"]["__typename"]
+            == "LaunchRunSuccess"
+        )
 
         run = launch_res["data"]["launchPipelineExecution"]["run"]
         run_id = run["runId"]
@@ -197,7 +212,10 @@ def test_deploy_docker():
             f"http://{webserver_host}:3000/graphql?query={LAUNCH_PIPELINE_MUTATION}&variables={json.dumps(variables)}"
         ).json()
 
-        assert launch_res["data"]["launchPipelineExecution"]["__typename"] == "LaunchRunSuccess"
+        assert (
+            launch_res["data"]["launchPipelineExecution"]["__typename"]
+            == "LaunchRunSuccess"
+        )
 
         run = launch_res["data"]["launchPipelineExecution"]["run"]
         run_id = run["runId"]
@@ -221,7 +239,10 @@ def test_deploy_docker():
             f"http://{webserver_host}:3000/graphql?query={LAUNCH_PIPELINE_MUTATION}&variables={json.dumps(variables)}"
         ).json()
 
-        assert launch_res["data"]["launchPipelineExecution"]["__typename"] == "LaunchRunSuccess"
+        assert (
+            launch_res["data"]["launchPipelineExecution"]["__typename"]
+            == "LaunchRunSuccess"
+        )
 
         run = launch_res["data"]["launchPipelineExecution"]["run"]
         hanging_run_id = run["runId"]
@@ -249,7 +270,9 @@ def _wait_for_run_status(run_id, webserver_host, desired_status):
 
     while True:
         if time.time() - start_time > 60:
-            raise Exception(f"Timed out waiting for run to reach status {desired_status}")
+            raise Exception(
+                f"Timed out waiting for run to reach status {desired_status}"
+            )
 
         run_res = requests.get(
             "http://{webserver_host}:3000/graphql?query={query_string}&variables={variables}".format(

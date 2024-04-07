@@ -34,7 +34,9 @@ my_job = my_graph.to_job(name="my_job")
 my_step_isolated_job = my_graph.to_job(
     name="my_step_isolated_job",
     executor_def=docker_executor,
-    resource_defs={"io_manager": FilesystemIOManager(base_dir="/tmp/io_manager_storage")},
+    resource_defs={
+        "io_manager": FilesystemIOManager(base_dir="/tmp/io_manager_storage")
+    },
 )
 
 
