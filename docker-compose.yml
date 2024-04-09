@@ -10,6 +10,8 @@ services:
       POSTGRES_USER: "postgres_user"
       POSTGRES_PASSWORD: "postgres_password"
       POSTGRES_DB: "postgres_db"
+    volumes:
+      - ./data:/var/lib/postgresql/data
     networks:
       - docker_example_network
 
