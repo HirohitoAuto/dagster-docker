@@ -35,6 +35,21 @@ services:
       DAGSTER_CURRENT_IMAGE: "docker_pipeline_x_image"
     networks:
       - docker_example_network
+  
+  docker_pipeline_y:
+    build:
+      context: .
+      dockerfile: ./Dockerfile_pipeline_y
+    container_name: docker_pipeline_y
+    image: docker_pipeline_y_image
+    restart: always
+    environment:
+      DAGSTER_POSTGRES_USER: "postgres_user"
+      DAGSTER_POSTGRES_PASSWORD: "postgres_password"
+      DAGSTER_POSTGRES_DB: "postgres_db"
+      DAGSTER_CURRENT_IMAGE: "docker_pipeline_y_image"
+    networks:
+      - docker_example_network
 
   # This service runs dagster-webserver, which loads your user code from the user code container.
   # Since our instance uses the QueuedRunCoordinator, any runs submitted from the webserver will be put on

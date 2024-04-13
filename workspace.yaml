@@ -3,4 +3,9 @@ load_from:
   - grpc_server:
       host: docker_pipeline_x
       port: 4000
-      location_name: "example_user_code"
+      location_name: "pipeline_x"
+
+  - grpc_server:
+      host: docker_pipeline_y
+      port: 4047
+      location_name: "pipeline_y"
