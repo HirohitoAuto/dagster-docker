@@ -83,6 +83,7 @@ services:
     depends_on:
       - docker_example_postgresql
       - docker_pipeline_x
+      - docker_pipeline_y
 
   # This service runs the dagster-daemon process, which is responsible for taking runs
   # off of the queue and launching them, as well as creating runs from schedules or sensors.
@@ -107,6 +108,7 @@ services:
     depends_on:
       - docker_example_postgresql
       - docker_pipeline_x
+      - docker_pipeline_y
 
 networks:
   docker_example_network:
