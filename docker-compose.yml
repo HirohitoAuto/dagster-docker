@@ -21,18 +21,18 @@ services:
   # Multiple containers like this can be deployed separately - each just needs to run on
   # its own port, and have its own entry in the workspace.yaml file that's loaded by the
       # webserver.
-  docker_example_user_code:
+  docker_pipeline_x:
     build:
       context: .
       dockerfile: ./Dockerfile_pipeline_x
-    container_name: docker_example_user_code
-    image: docker_example_user_code_image
+    container_name: docker_pipeline_x
+    image: docker_pipeline_x_image
     restart: always
     environment:
       DAGSTER_POSTGRES_USER: "postgres_user"
       DAGSTER_POSTGRES_PASSWORD: "postgres_password"
       DAGSTER_POSTGRES_DB: "postgres_db"
-      DAGSTER_CURRENT_IMAGE: "docker_example_user_code_image"
+      DAGSTER_CURRENT_IMAGE: "docker_pipeline_x_image"
     networks:
       - docker_example_network
 
@@ -67,7 +67,7 @@ services:
       - docker_example_network
     depends_on:
       - docker_example_postgresql
-      - docker_example_user_code
+      - docker_pipeline_x
 
   # This service runs the dagster-daemon process, which is responsible for taking runs
   # off of the queue and launching them, as well as creating runs from schedules or sensors.
@@ -91,7 +91,7 @@ services:
       - docker_example_network
     depends_on:
       - docker_example_postgresql
-      - docker_example_user_code
+      - docker_pipeline_x
 
 networks:
   docker_example_network:
