@@ -8,7 +8,7 @@ down:
 
 .PHONY: build
 build:
-	docker-compose build
+	docker-compose build --no-cache
 
 .PHONY: clean
 clean:
