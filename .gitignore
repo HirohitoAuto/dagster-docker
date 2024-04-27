@@ -161,3 +161,9 @@ cython_debug/
 
 # postgres mounted volumes
 data/
+
+# vscode setting
+.vscode/
+
+# duckdb
+pipeline_dbt/jaffle_shop/tutorial.duckdb

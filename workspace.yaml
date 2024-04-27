@@ -9,3 +9,8 @@ load_from:
       host: docker_pipeline_y
       port: 4047
       location_name: "pipeline_y"
+
+  - grpc_server:
+      host: docker_pipeline_dbt
+      port: 4094
+      location_name: "pipeline_dbt"

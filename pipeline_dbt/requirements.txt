@@ -1,0 +1,6 @@
+dagster
+dagster-dbt
+dagster-postgres
+dagster-docker
+dbt-duckdb
+pandas
