@@ -18,7 +18,6 @@ def raw_customers(context: AssetExecutionContext) -> None:
     connection.execute(
         "create or replace table jaffle_shop.raw_customers as select * from data"
     )
-
     # Log some metadata about the table we just wrote. It will show up in the UI.
     context.add_output_metadata({"num_rows": data.shape[0]})
 

@@ -1,10 +1,9 @@
 version: 2
 
 sources:
-  - name: tutorial
-    schema:  main
+  - name: jaffle_shop
     tables:
       - name: raw_customers
-      - name: raw_orders
-      - name: raw_payments
-        
+        meta:
+          dagster:
+            asset_key: ["raw_customers"]
