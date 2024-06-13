@@ -21,48 +21,48 @@ services:
   # Multiple containers like this can be deployed separately - each just needs to run on
   # its own port, and have its own entry in the workspace.yaml file that's loaded by the
       # webserver.
-  docker_pipeline_x:
+  pipeline_x:
     build:
-      context: .
-      dockerfile: ./Dockerfile_pipeline_x
-    container_name: docker_pipeline_x
-    image: docker_pipeline_x_image
+      context: ./pipeline_x
+      dockerfile: Dockerfile
+    container_name: pipeline_x
+    image: pipeline_x_image
     restart: always
     environment:
       DAGSTER_POSTGRES_USER: "postgres_user"
       DAGSTER_POSTGRES_PASSWORD: "postgres_password"
       DAGSTER_POSTGRES_DB: "postgres_db"
-      DAGSTER_CURRENT_IMAGE: "docker_pipeline_x_image"
+      DAGSTER_CURRENT_IMAGE: "pipeline_x_image"
     networks:
       - docker_example_network
   
-  docker_pipeline_y:
+  pipeline_y:
     build:
-      context: .
-      dockerfile: ./Dockerfile_pipeline_y
-    container_name: docker_pipeline_y
-    image: docker_pipeline_y_image
+      context: ./pipeline_y
+      dockerfile: Dockerfile
+    container_name: pipeline_y
+    image: pipeline_y_image
     restart: always
     environment:
       DAGSTER_POSTGRES_USER: "postgres_user"
       DAGSTER_POSTGRES_PASSWORD: "postgres_password"
       DAGSTER_POSTGRES_DB: "postgres_db"
-      DAGSTER_CURRENT_IMAGE: "docker_pipeline_y_image"
+      DAGSTER_CURRENT_IMAGE: "pipeline_y_image"
     networks:
       - docker_example_network
   
-  docker_pipeline_dbt:
+  pipeline_dbt:
     build:
-      context: .
-      dockerfile: ./Dockerfile_pipeline_dbt
-    container_name: docker_pipeline_dbt
-    image: docker_pipeline_dbt_image
+      context: ./pipeline_dbt
+      dockerfile: ./Dockerfile
+    container_name: pipeline_dbt
+    image: pipeline_dbt_image
     restart: always
     environment:
       DAGSTER_POSTGRES_USER: "postgres_user"
       DAGSTER_POSTGRES_PASSWORD: "postgres_password"
       DAGSTER_POSTGRES_DB: "postgres_db"
-      DAGSTER_CURRENT_IMAGE: "docker_pipeline_dbt_image"
+      DAGSTER_CURRENT_IMAGE: "pipeline_dbt_image"
       DAGSTER_DBT_PARSE_PROJECT_ON_LOAD: 1
     networks:
       - docker_example_network
@@ -100,9 +100,9 @@ services:
       - docker_example_network
     depends_on:
       - docker_example_postgresql
-      - docker_pipeline_x
-      - docker_pipeline_y
-      - docker_pipeline_dbt
+      - pipeline_x
+      - pipeline_y
+      - pipeline_dbt
 
   # This service runs the dagster-daemon process, which is responsible for taking runs
   # off of the queue and launching them, as well as creating runs from schedules or sensors.
@@ -126,9 +126,9 @@ services:
       - docker_example_network
     depends_on:
       - docker_example_postgresql
-      - docker_pipeline_x
-      - docker_pipeline_y
-      - docker_pipeline_dbt
+      - pipeline_x
+      - pipeline_y
+      - pipeline_dbt
 
 networks:
   docker_example_network:

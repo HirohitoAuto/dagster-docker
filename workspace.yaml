@@ -1,16 +1,16 @@
 load_from:
   # Each entry here corresponds to a service in the docker-compose file that exposes user code.
   - grpc_server:
-      host: docker_pipeline_x
+      host: pipeline_x
       port: 4000
       location_name: "pipeline_x"
 
   - grpc_server:
-      host: docker_pipeline_y
+      host: pipeline_y
       port: 4047
       location_name: "pipeline_y"
 
   - grpc_server:
-      host: docker_pipeline_dbt
+      host: pipeline_dbt
       port: 4094
       location_name: "pipeline_dbt"

@@ -9,3 +9,11 @@ WORKDIR /opt/dagster/app
 
 COPY ./requirements.txt /opt/dagster/app/
 RUN pip install --upgrade pip && pip install -r requirements.txt
+
+WORKDIR /opt/dagster/app/pipeline_dbt/jaffle_shop/jaffle_dagster
+
+EXPOSE 4094
+
+# CMD allows this to be overridden from run launchers or executors that want
+# to run other commands against your repository
+CMD ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "4094", "-m", "jaffle_dagster"]
