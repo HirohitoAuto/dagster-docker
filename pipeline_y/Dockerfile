@@ -3,17 +3,20 @@ FROM python:3.10-slim
 # Checkout and install dagster libraries needed to run the gRPC server
 # exposing your repository to dagster-webserver and dagster-daemon, and to load the DagsterInstance
 
-RUN apt-get update && apt-get install -y git
-
 WORKDIR /opt/dagster/app
 
-COPY pipeline_dbt/requirements.txt /opt/dagster/app/
+COPY ./requirements.txt /opt/dagster/app/
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-WORKDIR /opt/dagster/app/pipeline_dbt/jaffle_shop/jaffle_dagster
+RUN mkdir /opt/dagster/app/pipeline_y
+COPY ./ /opt/dagster/app/pipeline_y
 
-EXPOSE 4094
+ENV HACKERNEWS_NUM_DAYS_WINDOW 1
+
+# Run dagster gRPC server on port 4000
+
+EXPOSE 4047
 
 # CMD allows this to be overridden from run launchers or executors that want
 # to run other commands against your repository
-CMD ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "4094", "-m", "jaffle_dagster"]
+CMD ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "4047", "-m", "pipeline_y"]

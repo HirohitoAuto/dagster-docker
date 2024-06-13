@@ -5,10 +5,10 @@ FROM python:3.10-slim
 
 WORKDIR /opt/dagster/app
 
-COPY pipeline_x/requirements.txt /opt/dagster/app/
+COPY ./requirements.txt /opt/dagster/app/
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-COPY pipeline_x/repo.py /opt/dagster/app
+COPY ./repo.py /opt/dagster/app
 
 # Run dagster gRPC server on port 4000
 
